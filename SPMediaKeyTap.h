@@ -2,6 +2,8 @@
 #import <IOKit/hidsystem/ev_keymap.h>
 #import <Carbon/Carbon.h>
 
+// http://overooped.com/post/2593597587/mediakeys
+
 #define SPSystemDefinedEventMediaKeys 8
 
 @interface SPMediaKeyTap : NSObject {
