@@ -1,6 +1,6 @@
 // Copyright (c) 2010 Spotify AB
 #import "SPMediaKeyTap.h"
-#import "NSObject+Spotify.h"
+#import "NSObject+SPInvocationGrabbing.h" // https://gist.github.com/511181
 
 @interface SPMediaKeyTap ()
 -(BOOL)shouldInterceptMediaKeyEvents;
@@ -72,7 +72,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     _eventPortSource = CFMachPortCreateRunLoopSource(kCFAllocatorSystemDefault, _eventPort, 0);
 	assert(_eventPortSource != NULL);
 	
-	// Let's do this in a separate thread so that a slow Spotify doesn't lag the event tap
+	// Let's do this in a separate thread so that a slow app doesn't lag the event tap
 	[NSThread detachNewThreadSelector:@selector(eventTapThread) toTarget:self withObject:nil];
 }
 -(void)stopWatchingMediaKeys;
