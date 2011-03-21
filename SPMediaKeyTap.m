@@ -106,6 +106,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 		@"org.videolan.vlc",
 		@"com.apple.Aperture",
 		@"com.plexsquared.Plex",
+		@"com.soundcloud.desktop",
 		@"com.macromedia.fireworks", // the tap messes up their mouse input
 		nil
 	];
