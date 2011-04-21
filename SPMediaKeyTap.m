@@ -1,6 +1,6 @@
 // Copyright (c) 2010 Spotify AB
 #import "SPMediaKeyTap.h"
-#import "NSObject+SPInvocationGrabbing.h" // https://gist.github.com/511181
+#import "SPInvocationGrabbing/NSObject+SPInvocationGrabbing.h" // https://gist.github.com/511181, in submodule
 
 @interface SPMediaKeyTap ()
 -(BOOL)shouldInterceptMediaKeyEvents;
@@ -85,8 +85,8 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 
 +(BOOL)usesGlobalMediaKeyTap
 {
-	return YES;
 #ifdef _DEBUG
+	// breaking in gdb with a key tap inserted sometimes locks up all mouse and keyboard input forever, forcing reboot
 	return NO;
 #else
 	// XXX(nevyn): MediaKey event tap doesn't work on 10.4, feel free to figure out why if you have the energy.
@@ -97,6 +97,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 + (NSArray*)defaultMediaKeyUserBundleIdentifiers;
 {
 	return [NSArray arrayWithObjects:
+		[[NSBundle mainBundle] bundleIdentifier], // your app
 		@"com.spotify.client",
 		@"com.apple.iTunes",
 		@"com.apple.QuickTimePlayerX",

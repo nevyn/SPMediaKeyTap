@@ -1,0 +1,3 @@
+[submodule "SPInvocationGrabbing"]
+	path = SPInvocationGrabbing
+	url = git://gist.github.com/511181.git
