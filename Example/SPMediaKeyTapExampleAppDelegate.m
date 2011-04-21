@@ -22,12 +22,12 @@
 {
 	if([self class] != [SPMediaKeyTapExampleAppDelegate class]) return;
 	
+	// Register defaults for the whitelist of apps that want to use media keys
 	[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
 		[SPMediaKeyTap defaultMediaKeyUserBundleIdentifiers], kMediaKeyUsingBundleIdentifiersDefaultsKey,
 	nil]];
 }
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	keyTap = [[SPMediaKeyTap alloc] initWithDelegate:self];
 	keyTap = [[SPMediaKeyTap alloc] initWithDelegate:self];
 	if([SPMediaKeyTap usesGlobalMediaKeyTap])
 		[keyTap startWatchingMediaKeys];
