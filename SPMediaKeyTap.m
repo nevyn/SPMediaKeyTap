@@ -109,6 +109,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 		@"com.plexsquared.Plex",
 		@"com.soundcloud.desktop",
 		@"org.niltsh.MPlayerX",
+		@"org.clementine-player.clementine",
 		@"com.macromedia.fireworks", // the tap messes up their mouse input
 		nil
 	];
