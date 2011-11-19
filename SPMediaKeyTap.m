@@ -28,6 +28,9 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 	[self startWatchingAppSwitching];
 	singleton = self;
 	_mediaKeyAppList = [NSMutableArray new];
+    _tapThreadRL=nil;
+    _eventPort=nil;
+    _eventPortSource=nil;
 	return self;
 }
 -(void)dealloc;
@@ -58,6 +61,9 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 }
 
 -(void)startWatchingMediaKeys;{
+    // Prevent having multiple mediaKeys threads
+    [self stopWatchingMediaKeys];
+    
 	[self setShouldInterceptMediaKeyEvents:YES];
 	
 	// Add an event tap to intercept the system defined media key events
@@ -78,6 +84,22 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 -(void)stopWatchingMediaKeys;
 {
 	// TODO<nevyn>: Shut down thread, remove event tap port and source
+    
+    if(_tapThreadRL){
+        CFRunLoopStop(_tapThreadRL);
+        _tapThreadRL=nil;
+    }
+    
+    if(_eventPort){
+        CFMachPortInvalidate(_eventPort);
+        CFRelease(_eventPort);
+        _eventPort=nil;
+    }
+    
+    if(_eventPortSource){
+        CFRelease(_eventPortSource);
+        _eventPortSource=nil;
+    }
 }
 
 #pragma mark -
