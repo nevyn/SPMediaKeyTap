@@ -32,3 +32,4 @@
 @end
 
 extern NSString *kMediaKeyUsingBundleIdentifiersDefaultsKey;
+extern NSString *kIgnoreMediaKeysDefaultsKey;

@@ -112,7 +112,9 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 	return NO;
 #else
 	// XXX(nevyn): MediaKey event tap doesn't work on 10.4, feel free to figure out why if you have the energy.
-	return floor(NSAppKitVersionNumber) >= 949/*NSAppKitVersionNumber10_5*/;
+	return 
+		![[NSUserDefaults standardUserDefaults] boolForKey:kIgnoreMediaKeysDefaultsKey]
+		&& floor(NSAppKitVersionNumber) >= 949/*NSAppKitVersionNumber10_5*/;
 #endif
 }
 
@@ -240,6 +242,8 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 #pragma mark Task switching callbacks
 
 NSString *kMediaKeyUsingBundleIdentifiersDefaultsKey = @"SPApplicationsNeedingMediaKeys";
+NSString *kIgnoreMediaKeysDefaultsKey = @"SPIgnoreMediaKeys";
+
 
 
 -(void)mediaKeyAppListChanged;
