@@ -143,6 +143,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 		@"com.Timenut.SongKey",
 		@"com.macromedia.fireworks", // the tap messes up their mouse input
 		@"at.justp.Theremin",
+		@"ru.ya.themblsha.YandexMusic",
 		nil
 	];
 }
