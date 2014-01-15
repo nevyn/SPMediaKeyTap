@@ -149,6 +149,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 		@"com.jriver.MediaCenter20",
 		@"co.rackit.mate",
 		@"com.ttitt.b-music",
+		@"com.beardedspice.BeardedSpice",
 		nil
 	];
 }
