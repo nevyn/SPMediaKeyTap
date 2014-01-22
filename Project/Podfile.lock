@@ -1,0 +1,14 @@
+PODS:
+  - SPMediaKeyTap (0.1.0)
+
+DEPENDENCIES:
+  - SPMediaKeyTap (from `../SPMediaKeyTap.podspec`)
+
+EXTERNAL SOURCES:
+  SPMediaKeyTap:
+    :path: ../SPMediaKeyTap.podspec
+
+SPEC CHECKSUMS:
+  SPMediaKeyTap: 725c0a502ebabb835758f31f5fd5323c889ba0e2
+
+COCOAPODS: 0.29.0
