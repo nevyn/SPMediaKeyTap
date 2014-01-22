@@ -1,0 +1,5 @@
+platform :osx, '10.5'
+xcodeproj 'SPMediaKeyTapExample'
+
+pod "SPMediaKeyTap", :path => "../SPMediaKeyTap.podspec"
+

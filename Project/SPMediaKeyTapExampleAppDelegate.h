@@ -1,5 +1,5 @@
 #import <Cocoa/Cocoa.h>
-#import "../SPMediaKeyTap.h"
+#import "SPMediaKeyTap.h"
 
 @interface MediaKeyExampleApp : NSApplication
 @end
