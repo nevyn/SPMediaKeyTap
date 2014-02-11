@@ -150,6 +150,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 		@"co.rackit.mate",
 		@"com.ttitt.b-music",
 		@"com.beardedspice.BeardedSpice",
+		@"com.plug.Plug",
 		nil
 	];
 }
