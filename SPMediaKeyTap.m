@@ -151,7 +151,8 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 		@"com.ttitt.b-music",
 		@"com.beardedspice.BeardedSpice",
 		@"com.plug.Plug",
-        @"com.netease.163music",
+		@"com.netease.163music",
+		@"com.rdio.desktop",
 		nil
 	];
 }
