@@ -28,9 +28,9 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 	[self startWatchingAppSwitching];
 	singleton = self;
 	_mediaKeyAppList = [NSMutableArray new];
-    _tapThreadRL=nil;
-    _eventPort=nil;
-    _eventPortSource=nil;
+	_tapThreadRL=nil;
+	_eventPort=nil;
+	_eventPortSource=nil;
 	return self;
 }
 -(void)dealloc;
@@ -46,11 +46,11 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 	// Listen to "app switched" event, so that we don't intercept media keys if we
 	// weren't the last "media key listening" app to be active
 	EventTypeSpec eventType = { kEventClassApplication, kEventAppFrontSwitched };
-    OSStatus err = InstallApplicationEventHandler(NewEventHandlerUPP(appSwitched), 1, &eventType, self, &_app_switching_ref);
+	OSStatus err = InstallApplicationEventHandler(NewEventHandlerUPP(appSwitched), 1, &eventType, self, &_app_switching_ref);
 	assert(err == noErr);
 	
 	eventType.eventKind = kEventAppTerminated;
-    err = InstallApplicationEventHandler(NewEventHandlerUPP(appTerminated), 1, &eventType, self, &_app_terminating_ref);
+	err = InstallApplicationEventHandler(NewEventHandlerUPP(appTerminated), 1, &eventType, self, &_app_terminating_ref);
 	assert(err == noErr);
 }
 -(void)stopWatchingAppSwitching;
@@ -61,9 +61,9 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 }
 
 -(void)startWatchingMediaKeys;{
-    // Prevent having multiple mediaKeys threads
-    [self stopWatchingMediaKeys];
-    
+	// Prevent having multiple mediaKeys threads
+	[self stopWatchingMediaKeys];
+	
 	[self setShouldInterceptMediaKeyEvents:YES];
 	
 	// Add an event tap to intercept the system defined media key events
@@ -75,7 +75,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 								  self);
 	assert(_eventPort != NULL);
 	
-    _eventPortSource = CFMachPortCreateRunLoopSource(kCFAllocatorSystemDefault, _eventPort, 0);
+	_eventPortSource = CFMachPortCreateRunLoopSource(kCFAllocatorSystemDefault, _eventPort, 0);
 	assert(_eventPortSource != NULL);
 	
 	// Let's do this in a separate thread so that a slow app doesn't lag the event tap
@@ -84,22 +84,22 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 -(void)stopWatchingMediaKeys;
 {
 	// TODO<nevyn>: Shut down thread, remove event tap port and source
-    
-    if(_tapThreadRL){
-        CFRunLoopStop(_tapThreadRL);
-        _tapThreadRL=nil;
-    }
-    
-    if(_eventPort){
-        CFMachPortInvalidate(_eventPort);
-        CFRelease(_eventPort);
-        _eventPort=nil;
-    }
-    
-    if(_eventPortSource){
-        CFRelease(_eventPortSource);
-        _eventPortSource=nil;
-    }
+	
+	if(_tapThreadRL){
+		CFRunLoopStop(_tapThreadRL);
+		_tapThreadRL=nil;
+	}
+
+	if(_eventPort){
+		CFMachPortInvalidate(_eventPort);
+		CFRelease(_eventPort);
+		_eventPort=nil;
+	}
+
+	if(_eventPortSource){
+		CFRelease(_eventPortSource);
+		_eventPortSource=nil;
+	}
 }
 
 #pragma mark -
@@ -152,8 +152,8 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 		@"com.beardedspice.BeardedSpice",
 		@"com.plug.Plug",
 		@"com.plug.Plug2",
-    @"com.netease.163music",
-    		@"org.quodlibet.quodlibet",
+		@"com.netease.163music",
+		@"org.quodlibet.quodlibet",
 		nil
 	];
 }
@@ -197,7 +197,7 @@ static CGEventRef tapEventCallback2(CGEventTapProxy proxy, CGEventType type, CGE
 {
 	SPMediaKeyTap *self = refcon;
 
-    if(type == kCGEventTapDisabledByTimeout) {
+	if(type == kCGEventTapDisabledByTimeout) {
 		NSLog(@"Media key event tap was disabled by timeout");
 		CGEventTapEnable(self->_eventPort, TRUE);
 		return event;
@@ -219,7 +219,7 @@ static CGEventRef tapEventCallback2(CGEventTapProxy proxy, CGEventType type, CGE
 		return event;
 
 	int keyCode = (([nsEvent data1] & 0xFFFF0000) >> 16);
-    if (keyCode != NX_KEYTYPE_PLAY && keyCode != NX_KEYTYPE_FAST && keyCode != NX_KEYTYPE_REWIND && keyCode != NX_KEYTYPE_PREVIOUS && keyCode != NX_KEYTYPE_NEXT)
+	if (keyCode != NX_KEYTYPE_PLAY && keyCode != NX_KEYTYPE_FAST && keyCode != NX_KEYTYPE_REWIND && keyCode != NX_KEYTYPE_PREVIOUS && keyCode != NX_KEYTYPE_NEXT)
 		return event;
 
 	if (![self shouldInterceptMediaKeyEvents])
@@ -227,7 +227,7 @@ static CGEventRef tapEventCallback2(CGEventTapProxy proxy, CGEventType type, CGE
 	
 	[nsEvent retain]; // matched in handleAndReleaseMediaKeyEvent:
 	[self performSelectorOnMainThread:@selector(handleAndReleaseMediaKeyEvent:) withObject:nsEvent waitUntilDone:NO];
-	
+
 	return NULL;
 }
 
@@ -243,7 +243,7 @@ static CGEventRef tapEventCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 // event will have been retained in the other thread
 -(void)handleAndReleaseMediaKeyEvent:(NSEvent *)event {
 	[event autorelease];
-	
+
 	[_delegate mediaKeyTap:self receivedMediaKeyEvent:event];
 }
 
@@ -265,7 +265,7 @@ NSString *kIgnoreMediaKeysDefaultsKey = @"SPIgnoreMediaKeys";
 -(void)mediaKeyAppListChanged;
 {
 	if([_mediaKeyAppList count] == 0) return;
-	
+
 	/*NSLog(@"--");
 	int i = 0;
 	for (NSValue *psnv in _mediaKeyAppList) {
@@ -277,8 +277,8 @@ NSString *kIgnoreMediaKeysDefaultsKey = @"SPIgnoreMediaKeys";
 		NSString *bundleIdentifier = [processInfo objectForKey:(id)kCFBundleIdentifierKey];
 		NSLog(@"%d: %@", i++, bundleIdentifier);
 	}*/
-	
-    ProcessSerialNumber mySerial, topSerial;
+
+	ProcessSerialNumber mySerial, topSerial;
 	GetCurrentProcess(&mySerial);
 	[[_mediaKeyAppList objectAtIndex:0] getValue:&topSerial];
 
@@ -315,18 +315,18 @@ static pascal OSStatus appSwitched (EventHandlerCallRef nextHandler, EventRef ev
 {
 	SPMediaKeyTap *self = (id)userData;
 
-    ProcessSerialNumber newSerial;
-    GetFrontProcess(&newSerial);
-	
+	ProcessSerialNumber newSerial;
+	GetFrontProcess(&newSerial);
+
 	[self appIsNowFrontmost:newSerial];
-		
-    return CallNextEventHandler(nextHandler, evt);
+
+	return CallNextEventHandler(nextHandler, evt);
 }
 
 static pascal OSStatus appTerminated (EventHandlerCallRef nextHandler, EventRef evt, void* userData)
 {
 	SPMediaKeyTap *self = (id)userData;
-	
+
 	ProcessSerialNumber deadPSN;
 
 	GetEventParameter(
@@ -339,9 +339,9 @@ static pascal OSStatus appTerminated (EventHandlerCallRef nextHandler, EventRef 
 		&deadPSN
 	);
 
-	
+
 	[self appTerminated:deadPSN];
-    return CallNextEventHandler(nextHandler, evt);
+	return CallNextEventHandler(nextHandler, evt);
 }
 
 @end
