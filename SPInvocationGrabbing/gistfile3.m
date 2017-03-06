@@ -16,7 +16,7 @@
 
 // B
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
+
 	// Force the animation to happen by calling this method again after a small
 	// delay - see http://blog.instapaper.com/post/53568356
 	[[self nextRunloop] delayedTableViewDidSelectRowAtIndexPath: indexPath];
